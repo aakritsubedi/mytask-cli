@@ -57,7 +57,7 @@ module.exports = {
   removeTask: async (_id) => {
     await Task.deleteOne({ _id });
 
-    console.log(`Task with id ${id} removed.`);
+    console.log(`Task with id ${_id} removed.`);
 
     mongoose.connection.close();
   },
