@@ -68,5 +68,12 @@ module.exports = {
     console.log('All tasks removed');
 
     mongoose.connection.close();
+  },
+  emailTask: async () => {
+    myTasks = await Task.find();
+
+    mongoose.connection.close();
+    
+    return myTasks;
   }
 };

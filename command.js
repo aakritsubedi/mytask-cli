@@ -8,8 +8,10 @@ const {
   updateTask,
   allTask,
   removeTask,
-  deleteAllTasks
+  deleteAllTasks,
 } = require("./Tasks/functionalities");
+
+const { sendEmail, sendMyTask } = require("./Email/email");
 
 // Task Questions
 const AddTaskQuestions = [
@@ -17,6 +19,14 @@ const AddTaskQuestions = [
 ];
 const FindTaskQuestions = [
   { type: "input", name: "task", message: "Enter task title to search..." },
+];
+// Email Questions
+const emailQuestions = [
+  { type: "input", name: "firstname", message: "Enter receiver firstname" },
+  { type: "input", name: "lastname", message: "Enter receiver lastname" },
+  { type: "input", name: "subject", message: "Enter email subject" },
+  { type: "input", name: "email", message: "Enter receiver email" },
+  { type: "input", name: "message", message: "Enter message" },
 ];
 
 program.version("1.0.0").description("CLI todo application");
@@ -76,4 +86,20 @@ program
   .alias("delete")
   .description("Delete all task")
   .action(() => deleteAllTasks());
+
+// Send Email
+program
+  .command("send-email")
+  .alias("mail")
+  .description("Send an email")
+  .action(() => {
+    prompt(emailQuestions).then((answers) => sendEmail(answers));
+  });
+
+program
+  .command("mail-my-task <email>")
+  .alias("send-task")
+  .description("Send all my task")
+  .action((email) => sendMyTask(email));
+
 program.parse(process.argv);
